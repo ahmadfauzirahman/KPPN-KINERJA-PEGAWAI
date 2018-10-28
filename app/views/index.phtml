@@ -1,0 +1,776 @@
+<?php if ($this->session->get('id')): ?>
+    <!DOCTYPE html>
+    <html lang="en" dir="ltr">
+
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title><?= $title1 ?> | <?= $title2 ?></title>
+        <link rel="icon" href="<?= $this->url->get('img/logo.png') ?>">
+        <link type="text/css" href="<?= $this->url->get('') ?>assets/css/vendor-fullcalendar.css" rel="stylesheet">
+
+        <link type="text/css" href="<?= $this->url->get('') ?>assets/css/vendor-bootstrap-datepicker.css"
+              rel="stylesheet">
+        <link type="text/css" href="<?= $this->url->get('') ?>css/dataTables.bootstrap4.min.css" rel="stylesheet">
+        <link type="text/css" href="<?= $this->url->get('') ?>css/responsive.bootstrap4.min.css" rel="stylesheet">
+
+        <!-- Prevent the demo from appearing in search engines -->
+        <meta name="robots" content="noindex">
+        <link type="text/css" href="<?= $this->url->get('') ?>assets/css/vendor-summernote.css" rel="stylesheet">
+        <!-- App CSS -->
+        <link type="text/css" href="<?= $this->url->get('') ?>assets/css/app.css" rel="stylesheet">
+        <link type="text/css" href="<?= $this->url->get('') ?>assets/css/app.rtl.css" rel="stylesheet">
+
+        <!-- Simplebar -->
+        <link type="text/css" href="<?= $this->url->get('') ?>assets/vendor/simplebar.css" rel="stylesheet">
+        <script src="<?= $this->url->get('') ?>assets/vendor/jquery.min.js"></script>
+        <script src="<?= $this->url->get('js/highcharts.js') ?>"></script>
+        <script src="<?= $this->url->get('js/highcharts-more.js') ?>"></script>
+        <script src="<?= $this->url->get('js/solid-gauge.js') ?>"></script>
+        <script src="<?= $this->url->get('') ?>js/jquery.canvasjs.min.js"></script>
+
+        <!-- Bootstrap -->
+        <script src="<?= $this->url->get('') ?>assets/vendor/popper.js"></script>
+        <script src="<?= $this->url->get('') ?>assets/vendor/bootstrap.min.js"></script>
+
+        <!-- Simplebar -->
+        <!-- Used for adding a custom scrollbar to the drawer -->
+        <script src="<?= $this->url->get('') ?>assets/vendor/simplebar.js"></script>
+
+
+        <!-- Vendor -->
+        <script src="<?= $this->url->get('') ?>assets/vendor/Chart.min.js"></script>
+        <script src="<?= $this->url->get('') ?>assets/vendor/moment.min.js"></script>
+
+        <!-- APP -->
+        <script src="<?= $this->url->get('') ?>assets/js/color_variables.js"></script>
+        <script src="<?= $this->url->get('') ?>assets/js/app.js"></script>
+
+
+        <script src="<?= $this->url->get('') ?>assets/vendor/dom-factory.js"></script>
+        <!-- DOM Factory -->
+        <script src="<?= $this->url->get('') ?>assets/vendor/material-design-kit.js"></script>
+        <!-- MDK -->
+
+
+        <script src="<?= $this->url->get('js/index.js') ?>">
+
+        </script>
+
+        <script src="<?= $this->url->get('') ?>assets/vendor/fullcalendar.min.js"></script>
+        <script src="<?= $this->url->get('') ?>assets/vendor/jquery-ui.min.js"></script>
+        <script src="<?= $this->url->get('js/jquery.dataTables.min.js') ?>"></script>
+        <script src="<?= $this->url->get('js/dataTables.bootstrap4.min.js') ?>"></script>
+        <script src="<?= $this->url->get('js/dataTables.responsive.min.js') ?>"></script>
+        <script src="<?= $this->url->get('js/responsive.bootstrap4.min.js') ?>"></script>
+
+
+    </head>
+
+    <body>
+    <div class="modal fade" id="memberModal" tabindex="-1" role="dialog" aria-labelledby="largeModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="largeModalLabel">Profile</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="py-4 mb-3 bg-white border-bottom">
+                        <div class="container-fluid container-account">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="media media-user-info align-items-center">
+                                        <img src="<?= $this->url->get('') ?>img/logo.png"
+                                             class="img-fluid rounded-circle mr-3" width="60" alt="">
+                                        <div class="media-body lh-1">
+                                            <p class="h4 m-0"><?= $this->session->get('username') ?></p>
+                                            <p class="text-muted mb-0"><?= $this->session->get('hak_akses') ?></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 d-md-flex align-items-center justify-content-end">
+                                    <p class="mb-0 mr-3">
+                                        <i class="material-icons md-18 align-middle text-primary">event_available</i>
+                                        Last Login Date: <strong><?= date('d/m/Y') ?></strong>
+                                    </p>
+                                    <p class="mb-0">
+                                        <i class="material-icons md-18 align-middle text-primary">access_time</i>
+                                        Last Login Time: <strong><?= date('H:i:s') ?></strong>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="card card-account">
+                                <div class="card-body">
+                                    <form>
+                                        <div class="form-row">
+                                            <div class="form-group col-lg-6">
+                                                <label>Nama Lengkap</label>
+                                                <div class="input-group input-group--inline">
+                                                    <div class="input-group-addon">
+                                                        <i class="material-icons">person</i>
+                                                    </div>
+                                                    <input type="text" class="form-control" name="firstname"
+                                                           placeholder="<?= $this->session->get('username') ?>"
+                                                           readonly>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-lg-6">
+                                                <label>Nip</label>
+                                                <div class="input-group input-group--inline">
+                                                    <div class="input-group-addon">
+                                                        <i class="material-icons"> card_membership </i>
+                                                    </div>
+                                                    <input type="text" class="form-control" name="lastname"
+                                                           placeholder="<?= $this->session->get('nip') ?>"
+                                                           readonly>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-lg-12">
+                                                <label for="instant-messaging">Email</label>
+                                                <div class="input-group input-group--inline">
+                                                    <div class="input-group-addon">
+                                                        <i class="material-icons">email</i>
+                                                    </div>
+                                                    <input type="text" class="form-control" name="instant-messaging"
+                                                           placeholder="<?= $this->session->get('email') ?>" readonly>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-lg-12">
+                                                <label for="instant-messaging">Alamat</label>
+                                                <div class="input-group input-group--inline">
+                                                    <div class="input-group-addon">
+                                                        <i class="material-icons">address</i>
+                                                    </div>
+                                                    <input type="text" class="form-control" name="instant-messaging"
+                                                           placeholder="<?= $this->session->get('alamat') ?>" readonly>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="mdk-drawer-layout js-mdk-drawer-layout" data-fullbleed data-push data-responsive-width="992px"
+         data-has-scrolling-region>
+
+        <div class="mdk-drawer-layout__content">
+            <!-- header-layout -->
+            <div class="mdk-header-layout js-mdk-header-layout  mdk-header--fixed  mdk-header-layout__content--scrollable">
+                <!-- header -->
+                <div class="mdk-header js-mdk-header bg-primary" data-fixed>
+                    <div class="mdk-header__content">
+
+                        <nav class="navbar navbar-expand-md navbar-dark bg-primary d-flex-none">
+                            <button class="btn btn-link text-white pl-0" type="button" data-toggle="sidebar">
+                                <i class="material-icons align-middle md-36">short_text</i>
+                            </button>
+                            <div class="page-title m-0">KPPN PEKANBARU</div>
+
+                            <div class="collapse navbar-collapse" id="mainNavbar">
+                                <ul class="navbar-nav ml-auto align-items-center">
+                                    <li class="nav-item nav-link">
+                                        <div class="form-group m-0">
+                                            <div class="input-group input-group--inline">
+                                                <div class="input-group-addon">
+                                                    <i class="material-icons">search</i>
+                                                </div>
+                                                <input type="text" class="form-control" name="search"
+                                                       placeholder="Search app..">
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="nav-item dropdown notifications d-flex align-self-center align-items-center"
+                                        id="navbarNotifications">
+                                        <a href="#" class="nav-link dropdown-toggle notifications--active"
+                                           data-toggle="dropdown" aria-expanded="false">
+                                            <i class="material-icons align-middle">notifications</i>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-right"
+                                             aria-labelledby="notificationsDropdown" id="notificationsDropdown">
+                                            <ul class="nav nav-tabs-notifications d-flex px-0" id="notifications-ul"
+                                                role="tablist">
+                                                <li class="nav-item">
+                                                    <a class="nav-link active" id="notifications-tab" data-toggle="tab"
+                                                       href="#notifications" role="tab" aria-controls="notifications"
+                                                       aria-selected="true">Notifications</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" id="alerts-tab" data-toggle="tab" href="#alerts"
+                                                       role="tab" aria-controls="alerts"
+                                                       aria-selected="false">Alerts</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" id="messages-tab" data-toggle="tab"
+                                                       href="#messages"
+                                                       role="tab" aria-controls="messages"
+                                                       aria-selected="false">Messages</a>
+                                                </li>
+                                            </ul>
+                                            <div class="tab-content" id="notifications-tabs">
+                                                <div class="tab-pane fade show active" id="notifications"
+                                                     role="tabpanel"
+                                                     aria-labelledby="notifications-tab">
+                                                    <ul class="list-group list-group-flush">
+                                                        <li class="list-group-item">
+                                                            <div class="w-100">
+                                                                <a href="#">john</a> received a new quote
+                                                            </div>
+                                                            <div class="w-100 text-muted">4 secs ago</div>
+                                                        </li>
+                                                        <li class="list-group-item">
+                                                            <div class="w-100">
+                                                                <a href="#">karen</a> received a new quote
+                                                            </div>
+                                                            <div class="w-100 text-muted">25 mins ago</div>
+                                                        </li>
+                                                        <li class="list-group-item">
+                                                            <div class="w-100">
+                                                                <a href="#">jim</a> received a new quote
+                                                            </div>
+                                                            <div class="w-100 text-muted">7 hrs ago</div>
+                                                        </li>
+                                                        <li class="list-group-item text-right">
+                                                            <a href="#">
+                                                                <span class="align-middle">View All</span>
+                                                                <i class="material-icons md-18 align-middle">arrow_forward</i>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="tab-pane fade" id="alerts" role="tabpanel"
+                                                     aria-labelledby="alerts-tab">
+                                                    <ul class="list-group list-group-flush">
+                                                        <li class="list-group-item">
+                                                            <div class="media align-items-center">
+                                                                <i class="material-icons align-middle mr-2 text-warning">
+                                                                    info_outline
+                                                                </i>
+                                                                <div class="media-body">
+                                                                    <div class="w-100">
+                                                                        <a href="profile.html">john</a> received a new
+                                                                        <a href="#">quote</a>
+                                                                    </div>
+                                                                    <div class="w-100 text-muted">4 secs ago</div>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        <li class="list-group-item">
+                                                            <div class="media align-items-center">
+                                                                <i class="material-icons align-middle mr-2 text-success">
+                                                                    check_circle
+                                                                </i>
+                                                                <div class="media-body">
+                                                                    <div class="w-100">
+                                                                        <a href="profile.html">karen</a> completed a
+                                                                        <a href="#">task</a>
+                                                                    </div>
+                                                                    <div class="w-100 text-muted">25 mins ago</div>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        <li class="list-group-item">
+                                                            <div class="media align-items-center">
+                                                                <i class="material-icons align-middle mr-2 text-danger">
+                                                                    warning
+                                                                </i>
+                                                                <div class="media-body">
+                                                                    <div class="w-100">
+                                                                        <a href="profile.html">jim</a> removed a
+                                                                        <a href="#">task</a>
+                                                                    </div>
+                                                                    <div class="w-100 text-muted">7 hrs ago</div>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        <li class="list-group-item text-right">
+                                                            <a href="#">
+                                                                <span class="align-middle">View All</span>
+                                                                <i class="material-icons md-18 align-middle">arrow_forward</i>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="nav-item nav-divider">
+                                </ul>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+
+                <!-- content -->
+                <div class="mdk-header-layout__content ls-top-navbar mdk-header-layout__content--scrollable h-100">
+                    <!-- main content -->
+                    <div class="container-fluid">
+                        <h2><?= $title1 ?></h2>
+                        <p class="lead">
+                            <?= $title2 ?>
+                        </p>
+                        <h2><?= $this->flashSession->output() ?> Bagian <?= $this->session->get('hak_akses') ?></h2>
+                        <hr>
+                        <?php echo $this->getContent('') ?>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- // END drawer-layout__content -->
+
+        <!-- drawer -->
+        <div class="mdk-drawer js-mdk-drawer" id="default-drawer">
+            <div class="mdk-drawer__content">
+                <div class="mdk-drawer__inner" data-simplebar data-simplebar-force-enabled="true">
+                    <?php if ($this->session->get('hak_akses') == "Kasubag Umum"): ?>
+                        <nav class="drawer  drawer--dark">
+                            <div class="drawer-spacer">
+                                <div class="media align-items-center">
+                                    <a href="<?= $this->url->get('') ?>" class="drawer-brand-circle mr-2">D</a>
+                                    <div class="media-body">
+                                        <a href="<?= $this->url->get('') ?>" class="h5 m-0 text-link">KPPN PEKANBARU</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="py-2 drawer-heading">
+                                Home
+                            </div>
+                            <ul class="drawer-menu" id="dasboardMenu" data-children=".drawer-submenu">
+                                <li class="drawer-menu-item ">
+                                    <a href="<?= $this->url->get('') ?>">
+                                        <i class="material-icons">home</i>
+                                        <span class="drawer-menu-text"> Home </span>
+                                    </a>
+                                </li>
+                            </ul>
+                            <div class="py-2 drawer-heading">
+                                Dashboard
+                            </div>
+                            <ul class="drawer-menu" id="dasboardMenu" data-children=".drawer-submenu">
+                                <li class="drawer-menu-item ">
+                                    <a href="<?= $this->url->get('index/dashboard') ?>">
+                                        <i class="material-icons">dashboard</i>
+                                        <span class="drawer-menu-text"> Dashboard </span>
+                                    </a>
+                                </li>
+                                <li class="drawer-menu-item  ">
+                                    <a href="<?= $this->url->get('kegiatan/detail/' . $this->session->get('hak_akses')) ?>">
+                                        <i class="material-icons">event_available</i>
+                                        <span class="drawer-menu-text"> Rapat</span>
+                                    </a>
+                                </li>
+                            </ul>
+                            <div class="py-2 drawer-heading">
+                                Akun
+                            </div>
+
+                            <!-- MENU -->
+                            <ul class="drawer-menu" id="mainMenu" data-children=".drawer-submenu">
+                                <li class="drawer-menu-item">
+                                    <a href="<?= $this->url->get('pengguna') ?>">
+                                        <i class="material-icons">edit</i>
+                                        <span class="drawer-menu-text">Profile</span>
+                                    </a>
+                                </li>
+                                <li class="drawer-menu-item">
+                                    <a href="<?= $this->url->get('session/logout') ?>">
+                                        <i class="material-icons">lock</i>
+                                        <span class="drawer-menu-text">Logout</span>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </nav>
+                    <?php elseif ($this->session->get("hak_akses") == "Pencairan Dana"): ?>
+                        <nav class="drawer  drawer--dark">
+                            <div class="drawer-spacer">
+                                <div class="media align-items-center">
+                                    <a href="<?= $this->url->get('') ?>" class="drawer-brand-circle mr-2">D</a>
+                                    <div class="media-body">
+                                        <a href="<?= $this->url->get('') ?>" class="h5 m-0 text-link">KPPN PEKANBARU</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="py-2 drawer-heading">
+                                Home
+                            </div>
+                            <ul class="drawer-menu" id="dasboardMenu" data-children=".drawer-submenu">
+                                <li class="drawer-menu-item ">
+                                    <a href="<?= $this->url->get('') ?>">
+                                        <i class="material-icons">home</i>
+                                        <span class="drawer-menu-text"> Home </span>
+                                    </a>
+                                </li>
+                            </ul>
+                            <div class="py-2 drawer-heading">
+                                Dashboard
+                            </div>
+                            <ul class="drawer-menu" id="dasboardMenu" data-children=".drawer-submenu">
+                                <li class="drawer-menu-item ">
+                                    <a href="<?= $this->url->get('index/dashboard') ?>">
+                                        <i class="material-icons">dashboard</i>
+                                        <span class="drawer-menu-text"> Dashboard </span>
+                                    </a>
+                                </li>
+                                <li class="drawer-menu-item  ">
+                                    <a href="<?= $this->url->get('kegiatan/detail/' . $this->session->get('hak_akses')) ?>">
+                                        <i class="material-icons">event_available</i>
+                                        <span class="drawer-menu-text"> Rapat</span>
+                                    </a>
+                                </li>
+                            </ul>
+                            <ul class="drawer-menu" id="mainMenu" data-children=".drawer-submenu">
+                                <li class="drawer-menu-item">
+                                    <a href="<?= $this->url->get('pengguna') ?>">
+                                        <i class="material-icons">edit</i>
+                                        <span class="drawer-menu-text">Pengguna</span>
+                                    </a>
+                                </li>
+                                <li class="drawer-menu-item">
+                                    <a href="<?= $this->url->get('session/logout') ?>">
+                                        <i class="material-icons">lock</i>
+                                        <span class="drawer-menu-text">Logout</span>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </nav>
+                    <?php elseif ($this->session->get("hak_akses") == "Seksi Bank"): ?>
+                        <nav class="drawer  drawer--dark">
+                            <div class="drawer-spacer">
+                                <div class="media align-items-center">
+                                    <a href="<?= $this->url->get('') ?>" class="drawer-brand-circle mr-2">D</a>
+                                    <div class="media-body">
+                                        <a href="<?= $this->url->get('') ?>" class="h5 m-0 text-link">KPPN PEKANBARU</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="py-2 drawer-heading">
+                                Home
+                            </div>
+                            <ul class="drawer-menu" id="dasboardMenu" data-children=".drawer-submenu">
+                                <li class="drawer-menu-item ">
+                                    <a href="<?= $this->url->get('') ?>">
+                                        <i class="material-icons">home</i>
+                                        <span class="drawer-menu-text"> Home </span>
+                                    </a>
+                                </li>
+                            </ul>
+                            <div class="py-2 drawer-heading">
+                                Dashboard
+                            </div>
+                            <ul class="drawer-menu" id="dasboardMenu" data-children=".drawer-submenu">
+                                <li class="drawer-menu-item ">
+                                    <a href="<?= $this->url->get('index/dashboard') ?>">
+                                        <i class="material-icons">dashboard</i>
+                                        <span class="drawer-menu-text"> Dashboard </span>
+                                    </a>
+                                </li>
+                                <li class="drawer-menu-item  ">
+                                    <a href="<?= $this->url->get('kegiatan/detail/' . $this->session->get('hak_akses')) ?>">
+                                        <i class="material-icons">event_available</i>
+                                        <span class="drawer-menu-text"> Kegiatan</span>
+                                    </a>
+                                </li>
+                            </ul>
+                            <div class="py-2 drawer-heading">
+                                Akun
+                            </div>
+
+                            <!-- MENU -->
+                            <ul class="drawer-menu" id="mainMenu" data-children=".drawer-submenu">
+                                <li class="drawer-menu-item">
+                                    <a href="<?= $this->url->get('pengguna') ?>">
+                                        <i class="material-icons">edit</i>
+                                        <span class="drawer-menu-text">Pengguna</span>
+                                    </a>
+                                </li>
+                                <li class="drawer-menu-item">
+                                    <a href="<?= $this->url->get('session/logout') ?>">
+                                        <i class="material-icons">lock</i>
+                                        <span class="drawer-menu-text">Logout</span>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </nav>
+                    <?php elseif ($this->session->get("hak_akses") == "MSKI"): ?>
+                        <nav class="drawer  drawer--dark">
+                            <div class="drawer-spacer">
+                                <div class="media align-items-center">
+                                    <a href="<?= $this->url->get('') ?>" class="drawer-brand-circle mr-2">D</a>
+                                    <div class="media-body">
+                                        <a href="<?= $this->url->get('') ?>" class="h5 m-0 text-link">KPPN PEKANBARU</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="py-2 drawer-heading">
+                                Home
+                            </div>
+                            <ul class="drawer-menu" id="dasboardMenu" data-children=".drawer-submenu">
+                                <li class="drawer-menu-item ">
+                                    <a href="<?= $this->url->get('') ?>">
+                                        <i class="material-icons">home</i>
+                                        <span class="drawer-menu-text"> Home </span>
+                                    </a>
+                                </li>
+                            </ul>
+                            <div class="py-2 drawer-heading">
+                                Dashboard
+                            </div>
+                            <ul class="drawer-menu" id="dasboardMenu" data-children=".drawer-submenu">
+                                <li class="drawer-menu-item ">
+                                    <a href="<?= $this->url->get('index/dashboard') ?>">
+                                        <i class="material-icons">dashboard</i>
+                                        <span class="drawer-menu-text"> Dashboard </span>
+                                    </a>
+                                </li>
+                                <li class="drawer-menu-item  ">
+                                    <a href="<?= $this->url->get('kegiatan/detail/' . $this->session->get('hak_akses')) ?>">
+                                        <i class="material-icons">event_available</i>
+                                        <span class="drawer-menu-text"> Rapat</span>
+                                    </a>
+                                </li>
+                            </ul>
+                            <div class="py-2 drawer-heading">
+                                Akun
+                            </div>
+
+                            <!-- MENU -->
+                            <ul class="drawer-menu" id="mainMenu" data-children=".drawer-submenu">
+                                <li class="drawer-menu-item">
+                                    <a href="<?= $this->url->get('pengguna') ?>">
+                                        <i class="material-icons">edit</i>
+                                        <span class="drawer-menu-text">Pengguna</span>
+                                    </a>
+                                </li>
+                                <li class="drawer-menu-item">
+                                    <a href="<?= $this->url->get('session/logout') ?>">
+                                        <i class="material-icons">lock</i>
+                                        <span class="drawer-menu-text">Logout</span>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </nav>
+                    <?php elseif ($this->session->get("hak_akses") == "VERA"): ?>
+                        <nav class="drawer  drawer--dark">
+                            <div class="drawer-spacer">
+                                <div class="media align-items-center">
+                                    <a href="<?= $this->url->get('') ?>" class="drawer-brand-circle mr-2">D</a>
+                                    <div class="media-body">
+                                        <a href="<?= $this->url->get('') ?>" class="h5 m-0 text-link">KPPN PEKANBARU</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="py-2 drawer-heading">
+                                Home
+                            </div>
+                            <ul class="drawer-menu" id="dasboardMenu" data-children=".drawer-submenu">
+                                <li class="drawer-menu-item ">
+                                    <a href="<?= $this->url->get('') ?>">
+                                        <i class="material-icons">home</i>
+                                        <span class="drawer-menu-text"> Home </span>
+                                    </a>
+                                </li>
+                            </ul>
+                            <div class="py-2 drawer-heading">
+                                Dashboard
+                            </div>
+                            <ul class="drawer-menu" id="dasboardMenu" data-children=".drawer-submenu">
+                                <li class="drawer-menu-item ">
+                                    <a href="<?= $this->url->get('index/dashboard') ?>">
+                                        <i class="material-icons">dashboard</i>
+                                        <span class="drawer-menu-text"> Dashboard </span>
+                                    </a>
+                                </li>
+                                <li class="drawer-menu-item  ">
+                                    <a href="<?= $this->url->get('kegiatan/detail/' . $this->session->get('hak_akses')) ?>">
+                                        <i class="material-icons">event_available</i>
+                                        <span class="drawer-menu-text"> Rapat</span>
+                                    </a>
+                                </li>
+                            </ul>
+                            <div class="py-2 drawer-heading">
+                                Akun
+                            </div>
+
+                            <!-- MENU -->
+                            <ul class="drawer-menu" id="mainMenu" data-children=".drawer-submenu">
+                                <li class="drawer-menu-item">
+                                    <a href="<?= $this->url->get('pengguna') ?>">
+                                        <i class="material-icons">edit</i>
+                                        <span class="drawer-menu-text">Pengguna</span>
+                                    </a>
+                                </li>
+                                <li class="drawer-menu-item">
+                                    <a href="<?= $this->url->get('session/logout') ?>">
+                                        <i class="material-icons">lock</i>
+                                        <span class="drawer-menu-text">Logout</span>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </nav>
+                    <?php else: ?>
+                        <nav class="drawer  drawer--dark">
+                            <div class="drawer-spacer">
+                                <div class="media align-items-center">
+                                    <a href="<?= $this->url->get('') ?>" class="drawer-brand-circle mr-2">D</a>
+                                    <div class="media-body">
+                                        <a href="<?= $this->url->get('') ?>" class="h5 m-0 text-link">KPPN PEKANBARU</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="py-2 drawer-heading">
+                                Home
+                            </div>
+                            <ul class="drawer-menu" id="dasboardMenu" data-children=".drawer-submenu">
+                                <li class="drawer-menu-item ">
+                                    <a href="<?= $this->url->get('') ?>">
+                                        <i class="material-icons">home</i>
+                                        <span class="drawer-menu-text"> Home </span>
+                                    </a>
+                                </li>
+                            </ul>
+                            <div class="py-2 drawer-heading">
+                                Dashboard
+                            </div>
+                            <ul class="drawer-menu" id="dasboardMenu" data-children=".drawer-submenu">
+                                <li class="drawer-menu-item ">
+                                    <a href="<?= $this->url->get('index/dashboard') ?>">
+                                        <i class="material-icons">dashboard</i>
+                                        <span class="drawer-menu-text"> Dashboard </span>
+                                    </a>
+                                </li>
+                            </ul>
+                            <!-- HEADING -->
+                            <div class="py-2 drawer-heading">
+                                Monitoring Rapat
+                            </div>
+                            <!-- MENU -->
+                            <ul class="drawer-menu" id="dasboardMenu" data-children=".drawer-submenu">
+                                <li class="drawer-menu-item ">
+                                    <a href="<?= $this->url->get('rapat') ?>">
+                                        <i class="material-icons">poll</i>
+                                        <span class="drawer-menu-text"> Rapat </span>
+                                    </a>
+                                </li>
+                                <li class="drawer-menu-item ">
+                                    <a href="<?= $this->url->get('tindaklanjut') ?>">
+                                        <i class="material-icons">poll</i>
+                                        <span class="drawer-menu-text"> Tindak Lanjut </span>
+                                    </a>
+                                </li>
+                                <li class="drawer-menu-item ">
+                                    <a href="<?= $this->url->get('rapat/report') ?>">
+                                        <i class="material-icons">poll</i>
+                                        <span class="drawer-menu-text"> Report Rapat </span>
+                                    </a>
+                                </li>
+                            </ul>
+
+                            <!-- HEADING -->
+                            <div class="py-2 drawer-heading">
+                                Kalender
+                            </div>
+
+                            <!-- MENU -->
+                            <ul class="drawer-menu" id="mainMenu" data-children=".drawer-submenu">
+                                <li class="drawer-menu-item  ">
+                                    <a href="<?= $this->url->get('kegiatan') ?>">
+                                        <i class="material-icons">event_available</i>
+                                        <span class="drawer-menu-text"> Kegiatan</span>
+                                    </a>
+                                </li>
+                                <li class="drawer-menu-item  ">
+                                    <a href="<?= $this->url->get('kegiatan/kalender') ?>">
+                                        <i class="material-icons">event_available</i>
+                                        <span class="drawer-menu-text"> Kalender Bulanan</span>
+                                    </a>
+                                </li>
+                                <li class="drawer-menu-item  ">
+                                    <a href="<?= $this->url->get('kegiatan/statistik') ?>">
+                                        <i class="material-icons">event_available</i>
+                                        <span class="drawer-menu-text"> Statistik Kegiatan</span>
+                                    </a>
+                                </li>
+                                <li class="drawer-menu-item ">
+                                    <a href="<?= $this->url->get('kegiatan/report') ?>">
+                                        <i class="material-icons">poll</i>
+                                        <span class="drawer-menu-text"> Report Kegiatan </span>
+                                    </a>
+                                </li>
+                            </ul>
+
+
+                            <!-- HEADING -->
+                            <div class="py-2 drawer-heading">
+                                Akun
+                            </div>
+
+                            <!-- MENU -->
+                            <ul class="drawer-menu" id="mainMenu" data-children=".drawer-submenu">
+                                <li class="drawer-menu-item">
+                                    <a href="<?= $this->url->get('pengguna') ?>">
+                                        <i class="material-icons">edit</i>
+                                        <span class="drawer-menu-text">Pengguna</span>
+                                    </a>
+                                </li>
+                                <li class="drawer-menu-item">
+                                    <a href="<?= $this->url->get('session/logout') ?>">
+                                        <i class="material-icons">lock</i>
+                                        <span class="drawer-menu-text">Logout</span>
+                                    </a>
+                                </li>
+
+                            </ul>
+
+                        </nav>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>
+        <!-- // END drawer -->
+
+        <!-- drawer -->
+        <!-- // END drawer -->
+
+    </div>
+    <!-- // END drawer-layout -->
+    <script src="<?= $this->url->get('') ?>assets/vendor/bootstrap-datepicker.min.js"></script>
+    <script src="<?= $this->url->get('') ?>assets/js/datepicker.js"></script>
+
+    <!-- jQuery -->
+    <script src="<?= $this->url->get('') ?>assets/vendor/summernote-bs4.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#example').DataTable();
+        });
+    </script>
+    <script>
+        $('.text-editor').summernote({
+            height: '200',
+        });
+    </script>
+    </body>
+
+    </html>
+<?php else: ?>
+    <?= $this->getContent() ?>
+<?php endif; ?>
